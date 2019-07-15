@@ -22,7 +22,6 @@ if(NOT MSVC)
         -Wextra \
         -pipe \
         -pedantic \
-        -fsized-deallocation \
         -fdiagnostics-color=always \
         -Wunreachable-code"
     )
