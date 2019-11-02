@@ -828,7 +828,8 @@ TEST(Collection, Events)
 
         mtx::events::collections::TimelineEvent event = data;
 
-        ASSERT_TRUE(boost::get<ns::StateEvent<ns::state::Aliases>>(&event.data) != nullptr);
+        ASSERT_TRUE(
+          boost::variant2::holds_alternative<ns::StateEvent<ns::state::Aliases>>(event.data));
 }
 
 TEST(RoomAccountData, Tag)

@@ -1,5 +1,4 @@
 #include <boost/beast.hpp>
-#include <boost/variant.hpp>
 #include <iostream>
 #include <unistd.h>
 
@@ -38,33 +37,33 @@ print_errors(RequestErr err)
 bool
 is_room_message(const TimelineEvent &e)
 {
-        return (boost::get<mtx::events::RoomEvent<msg::Audio>>(&e) != nullptr) ||
-               (boost::get<mtx::events::RoomEvent<msg::Emote>>(&e) != nullptr) ||
-               (boost::get<mtx::events::RoomEvent<msg::File>>(&e) != nullptr) ||
-               (boost::get<mtx::events::RoomEvent<msg::Image>>(&e) != nullptr) ||
-               (boost::get<mtx::events::RoomEvent<msg::Notice>>(&e) != nullptr) ||
-               (boost::get<mtx::events::RoomEvent<msg::Text>>(&e) != nullptr) ||
-               (boost::get<mtx::events::RoomEvent<msg::Video>>(&e) != nullptr);
+        return (boost::variant2::holds_alternative<mtx::events::RoomEvent<msg::Audio>>(e)) ||
+               (boost::variant2::holds_alternative<mtx::events::RoomEvent<msg::Emote>>(e)) ||
+               (boost::variant2::holds_alternative<mtx::events::RoomEvent<msg::File>>(e)) ||
+               (boost::variant2::holds_alternative<mtx::events::RoomEvent<msg::Image>>(e)) ||
+               (boost::variant2::holds_alternative<mtx::events::RoomEvent<msg::Notice>>(e)) ||
+               (boost::variant2::holds_alternative<mtx::events::RoomEvent<msg::Text>>(e)) ||
+               (boost::variant2::holds_alternative<mtx::events::RoomEvent<msg::Video>>(e));
 }
 
 // Retrieves the fallback body value from the event.
 std::string
 get_body(const TimelineEvent &e)
 {
-        if (boost::get<RoomEvent<msg::Audio>>(&e) != nullptr)
-                return boost::get<RoomEvent<msg::Audio>>(e).content.body;
-        else if (boost::get<RoomEvent<msg::Emote>>(&e) != nullptr)
-                return boost::get<RoomEvent<msg::Emote>>(e).content.body;
-        else if (boost::get<RoomEvent<msg::File>>(&e) != nullptr)
-                return boost::get<RoomEvent<msg::File>>(e).content.body;
-        else if (boost::get<RoomEvent<msg::Image>>(&e) != nullptr)
-                return boost::get<RoomEvent<msg::Image>>(e).content.body;
-        else if (boost::get<RoomEvent<msg::Notice>>(&e) != nullptr)
-                return boost::get<RoomEvent<msg::Notice>>(e).content.body;
-        else if (boost::get<RoomEvent<msg::Text>>(&e) != nullptr)
-                return boost::get<RoomEvent<msg::Text>>(e).content.body;
-        else if (boost::get<RoomEvent<msg::Video>>(&e) != nullptr)
-                return boost::get<RoomEvent<msg::Video>>(e).content.body;
+        if (auto ev = boost::variant2::get_if<RoomEvent<msg::Audio>>(&e))
+                return ev->content.body;
+        else if (auto ev = boost::variant2::get_if<RoomEvent<msg::Emote>>(&e))
+                return ev->content.body;
+        else if (auto ev = boost::variant2::get_if<RoomEvent<msg::File>>(&e))
+                return ev->content.body;
+        else if (auto ev = boost::variant2::get_if<RoomEvent<msg::Image>>(&e))
+                return ev->content.body;
+        else if (auto ev = boost::variant2::get_if<RoomEvent<msg::Notice>>(&e))
+                return ev->content.body;
+        else if (auto ev = boost::variant2::get_if<RoomEvent<msg::Text>>(&e))
+                return ev->content.body;
+        else if (auto ev = boost::variant2::get_if<RoomEvent<msg::Video>>(&e))
+                return ev->content.body;
 
         return "";
 }
@@ -73,7 +72,7 @@ get_body(const TimelineEvent &e)
 std::string
 get_sender(const TimelineEvent &event)
 {
-        return boost::apply_visitor([](auto e) { return e.sender; }, event);
+        return boost::variant2::visit([](auto e) { return e.sender; }, event);
 }
 
 // Simple print of the message contents.

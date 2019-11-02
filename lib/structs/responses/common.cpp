@@ -110,7 +110,7 @@ parse_room_account_data_events(
         }
 }
 
-struct TimelineEventVisitor : public boost::static_visitor<json>
+struct TimelineEventVisitor
 {
         json operator()(const events::StateEvent<states::Aliases> &aliasEv) const
         {
@@ -271,7 +271,7 @@ compose_timeline_events(json &events,
                         const std::vector<mtx::events::collections::TimelineEvents> &container)
 {
         const auto c = container.at(0);
-        events       = boost::apply_visitor(TimelineEventVisitor(), c);
+        events       = boost::variant2::visit(TimelineEventVisitor(), c);
 }
 
 void

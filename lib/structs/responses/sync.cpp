@@ -2,7 +2,7 @@
 #include "mtx/events/collections.hpp"
 #include "mtx/responses/common.hpp"
 
-#include <boost/variant.hpp>
+#include <boost/variant2/variant.hpp>
 
 using json = nlohmann::json;
 
@@ -130,11 +130,11 @@ InvitedRoom::name() const
         std::string member_name;
 
         for (const auto &event : invite_state) {
-                if (boost::get<Name>(&event) != nullptr) {
-                        room_name = boost::get<Name>(event).content.name;
-                } else if (boost::get<Member>(&event) != nullptr) {
+                if (auto e = boost::variant2::get_if<Name>(&event)) {
+                        room_name = e->content.name;
+                } else if (auto e = boost::variant2::get_if<Member>(&event)) {
                         if (member_name.empty())
-                                member_name = boost::get<Member>(event).content.display_name;
+                                member_name = e->content.display_name;
                 }
         }
 
@@ -154,15 +154,12 @@ InvitedRoom::avatar() const
         std::string member_avatar;
 
         for (const auto &event : invite_state) {
-                if (boost::get<Avatar>(&event) != nullptr) {
-                        auto msg    = boost::get<Avatar>(event);
-                        room_avatar = msg.content.url;
-                } else if (boost::get<Member>(&event) != nullptr) {
-                        auto msg = boost::get<Member>(event);
-
+                if (auto msg = boost::variant2::get_if<Avatar>(&event)) {
+                        room_avatar = msg->content.url;
+                } else if (auto msg = boost::variant2::get_if<Member>(&event)) {
                         // Pick the first avatar.
                         if (member_avatar.empty())
-                                member_avatar = msg.content.avatar_url;
+                                member_avatar = msg->content.avatar_url;
                 }
         }
 
