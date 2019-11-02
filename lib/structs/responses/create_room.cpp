@@ -1,5 +1,7 @@
 #include <string>
 
+#include <nlohmann/json.hpp>
+
 #include "mtx/identifiers.hpp"
 #include "mtx/responses/create_room.hpp"
 

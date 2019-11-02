@@ -1,5 +1,7 @@
 #include "mtx/common.hpp"
 
+#include <nlohmann/json.hpp>
+
 namespace mtx {
 namespace crypto {
 

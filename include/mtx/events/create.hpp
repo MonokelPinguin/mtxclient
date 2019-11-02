@@ -1,7 +1,7 @@
 #pragma once
 
 #include <boost/optional.hpp>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 
 using json = nlohmann::json;
 

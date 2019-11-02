@@ -3,7 +3,7 @@
 #include <string>
 
 #include <mtx/common.hpp>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 
 using json = nlohmann::json;
 
@@ -175,12 +175,8 @@ struct ClaimKeys
         std::map<std::string, std::map<std::string, std::string>> one_time_keys;
 };
 
-inline void
-to_json(json &obj, const ClaimKeys &request)
-{
-        obj["timeout"]       = request.timeout;
-        obj["one_time_keys"] = request.one_time_keys;
-}
+void
+to_json(json &obj, const ClaimKeys &request);
 
 } // namespace requests
 } // namespace mtx

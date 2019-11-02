@@ -3,7 +3,7 @@
 #include <exception>
 #include <iostream>
 
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 
 namespace mtx {
 namespace identifiers {
@@ -99,42 +99,18 @@ parse(const std::string &id)
         return identifier;
 }
 
-inline void
-from_json(const nlohmann::json &obj, User &user)
-{
-        user = parse<User>(obj.get<std::string>());
-}
-
-inline void
-to_json(nlohmann::json &obj, const User &user)
-{
-        obj = user.to_string();
-}
-
-inline void
-from_json(const nlohmann::json &obj, Room &room)
-
-{
-        room = parse<Room>(obj.get<std::string>());
-}
-
-inline void
-to_json(nlohmann::json &obj, const Room &room)
-{
-        obj = room.to_string();
-}
-
-inline void
-from_json(const nlohmann::json &obj, Event &event)
-{
-        event = parse<Event>(obj.get<std::string>());
-}
-
-inline void
-to_json(nlohmann::json &obj, const Event &event)
-{
-        obj = event.to_string();
-}
+void
+from_json(const nlohmann::json &obj, User &user);
+void
+to_json(nlohmann::json &obj, const User &user);
+void
+from_json(const nlohmann::json &obj, Room &room);
+void
+to_json(nlohmann::json &obj, const Room &room);
+void
+from_json(const nlohmann::json &obj, Event &event);
+void
+to_json(nlohmann::json &obj, const Event &event);
 
 } // namespace identifiers
 } // namespace mtx

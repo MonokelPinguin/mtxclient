@@ -2,6 +2,8 @@
 
 #include <boost/variant.hpp>
 
+#include <nlohmann/json_fwd.hpp>
+
 #include "mtx/events.hpp"
 #include "mtx/events/aliases.hpp"
 #include "mtx/events/avatar.hpp"

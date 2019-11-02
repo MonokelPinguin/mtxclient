@@ -1,5 +1,7 @@
 #include "mtx/errors.hpp"
 
+#include <nlohmann/json.hpp>
+
 namespace mtx {
 namespace errors {
 std::string

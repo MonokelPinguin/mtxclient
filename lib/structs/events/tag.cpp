@@ -1,5 +1,7 @@
 #include <string>
 
+#include <nlohmann/json.hpp>
+
 #include "mtx/events/tag.hpp"
 
 using json = nlohmann::json;

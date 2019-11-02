@@ -1,6 +1,8 @@
 #include <regex>
 #include <string>
 
+#include <nlohmann/json.hpp>
+
 #include "mtx/responses/well-known.hpp"
 
 using json = nlohmann::json;

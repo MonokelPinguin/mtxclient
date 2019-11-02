@@ -1,5 +1,7 @@
 #include "mtx/requests.hpp"
 
+#include <nlohmann/json.hpp>
+
 using json = nlohmann::json;
 
 namespace mtx {
@@ -121,6 +123,13 @@ to_json(json &obj, const QueryKeys &request)
         obj["timeout"]     = request.timeout;
         obj["device_keys"] = request.device_keys;
         obj["token"]       = request.token;
+}
+
+void
+to_json(json &obj, const ClaimKeys &request)
+{
+        obj["timeout"]       = request.timeout;
+        obj["one_time_keys"] = request.one_time_keys;
 }
 
 } // namespace requests

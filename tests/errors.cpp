@@ -1,5 +1,7 @@
 #include <gtest/gtest.h>
 
+#include <nlohmann/json.hpp>
+
 #include <mtx/errors.hpp>
 
 using namespace mtx::errors;
